@@ -1,15 +1,29 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-// Routes
+// Layouts
+import Main, { mainLoader } from "./layouts/Main";
+// Routess
 import Dashboard, { dashboardLoader } from "./pages/Dashboard";
 import Error from "./pages/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
-    loader: dashboardLoader,
+    element: <Main />,
+    loader: mainLoader,
     errorElement: <Error />,
+    children: [
+      {
+        index: true,
+        path: "/",
+        element: <Dashboard />,
+        loader: dashboardLoader,
+        errorElement: <Error />,
+      },
+      {
+        path: "about",
+        element: <p>About</p>,
+      },
+    ],
   },
 ]);
 
