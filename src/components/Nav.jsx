@@ -1,9 +1,11 @@
-//rrd imports
+// rrd imports
 import { Form, NavLink } from "react-router-dom";
+
+// library
+import { TrashIcon } from "@heroicons/react/24/solid";
+
 // assets
 import logomark from "../assets/logomark.svg";
-//library
-import { BeakerIcon } from "@heroicons/react/24/solid";
 
 const Nav = ({ userName }) => {
   return (
@@ -15,7 +17,7 @@ const Nav = ({ userName }) => {
       {userName && (
         <Form
           method="post"
-          action="/logout"
+          action="logout"
           onSubmit={(event) => {
             if (!confirm("Delete user and all data?")) {
               event.preventDefault();
@@ -24,11 +26,11 @@ const Nav = ({ userName }) => {
         >
           <button type="submit" className="btn btn--warning">
             <span>Delete User</span>
+            <TrashIcon width={20} />
           </button>
         </Form>
       )}
     </nav>
   );
 };
-
 export default Nav;
