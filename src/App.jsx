@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // Layouts
 import Main, { mainLoader } from "./layouts/Main";
-// Routess
+// Routes
 import Dashboard, { dashboardLoader } from "./pages/Dashboard";
 import Error from "./pages/Error";
 
