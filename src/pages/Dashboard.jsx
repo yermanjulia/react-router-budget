@@ -22,14 +22,17 @@ export async function dashboardAction({ request }) {
   const data = await request.formData();
   const formData = Object.fromEntries(data);
   try {
-    throw new Error("Ya done");
+    localStorage.setItem("userName", JSON.stringify(formData.userName));
+    return toast.success(`Welcome, $(formData.userName}`);
   } catch (e) {
+    throw new Error("Ya done");
+
     throw new Error("There was a problem creating your account.");
   }
 }
 
 const Dashboard = () => {
-  const { userName } = useLoaderData();
+  const { userName, budgets } = useLoaderData();
 
   return (
     <>
