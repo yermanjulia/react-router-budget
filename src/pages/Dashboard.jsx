@@ -20,15 +20,14 @@ export function dashboardLoader() {
 // action
 export async function dashboardAction({ request }) {
   const data = await request.formData();
-  const formData = Object.fromEntries(data);
-  try {
-    localStorage.setItem("userName", JSON.stringify(formData.userName));
-    return toast.success(`Welcome, $(formData.userName}`);
-  } catch (e) {
-    throw new Error("Ya done");
-
-    throw new Error("There was a problem creating your account.");
-  }
+  const { _action, ...values } = Object.fromEntries(data);
+  console.log(_action);
+  // try {
+  //   localStorage.setItem("userName", JSON.stringify(formData.userName));
+  //   return toast.success(`Welcome, $(formData.userName}`);
+  // } catch (e) {
+  //   throw new Error("There was a problem creating your account.");
+  // }
 }
 
 const Dashboard = () => {

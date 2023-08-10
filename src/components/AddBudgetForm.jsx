@@ -1,4 +1,5 @@
 import { Form } from "react-router-dom";
+
 // library imports
 import { CurrencyDollarIcon } from "@heroicons/react/24/solid";
 
@@ -13,7 +14,7 @@ const AddBudgetForm = () => {
             type="text"
             name="newBudget"
             id="newBudget"
-            placeholder="e.g., Shopping"
+            placeholder="e.g., Groceries"
             required
           />
         </div>
@@ -24,7 +25,7 @@ const AddBudgetForm = () => {
             step="0.01"
             name="newBudgetAmount"
             id="newBudgetAmount"
-            placeholder="e.g., $500"
+            placeholder="e.g., $350"
             required
             inputMode="decimal"
           />
@@ -37,5 +38,4 @@ const AddBudgetForm = () => {
     </div>
   );
 };
-
 export default AddBudgetForm;

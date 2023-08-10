@@ -1,36 +1,58 @@
 // rrd imports
-import { Form, NavLink } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
-// library
-import { TrashIcon } from "@heroicons/react/24/solid";
+// library imports
+import { toast } from "react-toastify";
 
-// assets
-import logomark from "../assets/logomark.svg";
+// components
+import Intro from "../components/Intro";
+import AddBudgetForm from "../components/AddBudgetForm";
 
-const Nav = ({ userName }) => {
+//  helper functions
+import { fetchData } from "../helpers";
+
+// loader
+export function dashboardLoader() {
+  const userName = fetchData("userName");
+  const budgets = fetchData("budgets");
+  return { userName, budgets };
+}
+
+// action
+export async function dashboardAction({ request }) {
+  const data = await request.formData();
+  const formData = Object.fromEntries(data);
+  try {
+    localStorage.setItem("userName", JSON.stringify(formData.userName));
+    return toast.success(`Welcome, ${formData.userName}`);
+  } catch (e) {
+    throw new Error("There was a problem creating your account.");
+  }
+}
+
+const Dashboard = () => {
+  const { userName, budgets } = useLoaderData();
+
   return (
-    <nav>
-      <NavLink to="/" aria-label="Go to home">
-        <img src={logomark} alt="" height={30} />
-        <span>HomeBudget</span>
-      </NavLink>
-      {userName && (
-        <Form
-          method="post"
-          action="logout"
-          onSubmit={(event) => {
-            if (!confirm("Delete user and all data?")) {
-              event.preventDefault();
-            }
-          }}
-        >
-          <button type="submit" className="btn btn--warning">
-            <span>Delete User</span>
-            <TrashIcon width={20} />
-          </button>
-        </Form>
+    <>
+      {userName ? (
+        <div className="dashboard">
+          <h1>
+            Welcome back, <span className="accent">{userName}</span>
+          </h1>
+          <div className="grid-sm">
+            {/* {budgets ? () : ()} */}
+            <div className="grid-lg">
+              <div className="flex-lg">
+                <AddBudgetForm />
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <Intro />
       )}
-    </nav>
+    </>
   );
 };
-export default Nav;
+export default Dashboard;
