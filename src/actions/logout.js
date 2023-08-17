@@ -1,7 +1,7 @@
 // rrd imports
 import { redirect } from "react-router-dom";
 
-// Library
+// library
 import { toast } from "react-toastify";
 
 // helpers
@@ -12,7 +12,7 @@ export async function logoutAction() {
   deleteItem({
     key: "userName",
   });
-  toast.success("You've deleted your account!");
+  toast.success("You’ve deleted your account!");
   // return redirect
   return redirect("/");
 }

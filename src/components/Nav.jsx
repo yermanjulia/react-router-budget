@@ -1,58 +1,36 @@
 // rrd imports
-import { useLoaderData } from "react-router-dom";
+import { Form, NavLink } from "react-router-dom";
 
-// library imports
-import { toast } from "react-toastify";
+// library
+import { TrashIcon } from "@heroicons/react/24/solid";
 
-// components
-import Intro from "../components/Intro";
-import AddBudgetForm from "../components/AddBudgetForm";
+// assets
+import logomark from "../assets/logomark.svg";
 
-//  helper functions
-import { fetchData } from "../helpers";
-
-// loader
-export function dashboardLoader() {
-  const userName = fetchData("userName");
-  const budgets = fetchData("budgets");
-  return { userName, budgets };
-}
-
-// action
-export async function dashboardAction({ request }) {
-  const data = await request.formData();
-  const formData = Object.fromEntries(data);
-  try {
-    localStorage.setItem("userName", JSON.stringify(formData.userName));
-    return toast.success(`Welcome, ${formData.userName}`);
-  } catch (e) {
-    throw new Error("There was a problem creating your account.");
-  }
-}
-
-const Dashboard = () => {
-  const { userName, budgets } = useLoaderData();
-
+const Nav = ({ userName }) => {
   return (
-    <>
-      {userName ? (
-        <div className="dashboard">
-          <h1>
-            Welcome back, <span className="accent">{userName}</span>
-          </h1>
-          <div className="grid-sm">
-            {/* {budgets ? () : ()} */}
-            <div className="grid-lg">
-              <div className="flex-lg">
-                <AddBudgetForm />
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <Intro />
+    <nav>
+      <NavLink to="/" aria-label="Go to home">
+        <img src={logomark} alt="" height={30} />
+        <span>HomeBudget</span>
+      </NavLink>
+      {userName && (
+        <Form
+          method="post"
+          action="logout"
+          onSubmit={(event) => {
+            if (!confirm("Delete user and all data?")) {
+              event.preventDefault();
+            }
+          }}
+        >
+          <button type="submit" className="btn btn--warning">
+            <span>Delete User</span>
+            <TrashIcon width={20} />
+          </button>
+        </Form>
       )}
-    </>
+    </nav>
   );
 };
-export default Dashboard;
+export default Nav;
