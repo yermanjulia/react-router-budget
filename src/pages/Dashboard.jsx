@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import Intro from "../components/Intro";
 import AddBudgetForm from "../components/AddBudgetForm";
 import AddExpenseForm from "../components/AddExpenseForm";
+import BudgetItem from "../components/BudgetItem";
 
 //  helper functions
 import { createBudget, createExpense, fetchData, waait } from "../helpers";
@@ -25,7 +26,8 @@ export async function dashboardAction({ request }) {
 
   const data = await request.formData();
   const { _action, ...values } = Object.fromEntries(data);
-  //  new user submission
+
+  // new user submission
   if (_action === "newUser") {
     try {
       localStorage.setItem("userName", JSON.stringify(values.userName));
@@ -34,17 +36,19 @@ export async function dashboardAction({ request }) {
       throw new Error("There was a problem creating your account.");
     }
   }
+
   if (_action === "createBudget") {
     try {
       createBudget({
         name: values.newBudget,
-        name: values.newBudgetAmount,
+        amount: values.newBudgetAmount,
       });
       return toast.success("Budget created!");
     } catch (e) {
       throw new Error("There was a problem creating your budget.");
     }
   }
+
   if (_action === "createExpense") {
     try {
       createExpense({
@@ -75,6 +79,12 @@ const Dashboard = () => {
                 <div className="flex-lg">
                   <AddBudgetForm />
                   <AddExpenseForm budgets={budgets} />
+                </div>
+                <h2>Existing Budgets</h2>
+                <div className="budgets">
+                  {budgets.map((budget) => (
+                    <BudgetItem key={budget.id} budget={budget} />
+                  ))}
                 </div>
               </div>
             ) : (
