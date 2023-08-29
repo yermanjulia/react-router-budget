@@ -1,3 +1,6 @@
+// component import
+import ExpenseItem from "./ExpenseItem";
+
 const Table = ({ expenses }) => {
   return (
     <div className="table">
@@ -12,8 +15,7 @@ const Table = ({ expenses }) => {
         <tbody>
           {expenses.map((expense) => (
             <tr key={expense.id}>
-              {expense.name}
-              {/* ExpenseItem */}
+              <ExpenseItem expense={expense} />
             </tr>
           ))}
         </tbody>
