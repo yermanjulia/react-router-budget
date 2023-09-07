@@ -43,7 +43,7 @@ It supports deleting expenses.
 Getting Started
 To get a local copy up and running, follow these simple steps:
 # Clone the repository
-git clone https://github.com/yourusername/your-project-name.git
+git clone https://github.com/yermanjulia/react-router-budget.git
 
 # Navigate into the project directory
 cd your-project-name
